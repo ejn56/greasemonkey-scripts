@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Leboncoin auto refresh leboncoin search + bell sound for new results
 // @description  Leboncoin auto refresh search tab + little bell sound when new results pop up
-// @version      1.0.1
+// @version      1.0.2
 // @match        https://www.leboncoin.fr/mes-recherches
 // @grant        none
 // @author       ejn56
@@ -19,7 +19,6 @@ const minutesBeforeReload = Math.floor(Math.random() * 10) + 10;
 let resultsCount = '4';
 
 setTimeout(() => { // Wait for the page to load before checking the results
-    new Audio(notificationSoundUrl).play(); // FIXME
     if(Array.from(document.querySelectorAll("div")).filter(sp => sp.innerHTML === resultsCount)[0]) {
         // New results have appeared: update title + play sound
         new Audio(notificationSoundUrl).play();
