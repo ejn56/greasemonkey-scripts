@@ -17,23 +17,24 @@ switch (location.hostname) {
     case "consent.youtube.com":
     case "consent.google.fr":
     case "consent.google.com":
-        clickIfPresent(Array.from(document.querySelectorAll("span")).find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML)));
+        clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML)));
         break;
     case "www.leboncoin.fr":
-        clickIfPresent(Array.from(document.querySelectorAll("span")).find(sp => sp.innerHTML === "Continuer sans accepter"));
+        clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => sp.innerHTML === "Continuer sans accepter"));
         break;
     case "www.google.com":
     case "www.google.fr":
-        clickIfPresent(Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML)).parentNode);
+        clickIfPresent(() => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML)).parentNode);
         break;
     case "www.ebay.fr":
-        clickIfPresent(Array.from(document.querySelectorAll("button")).find(el => el.innerHTML === "Accepter"));
+        clickIfPresent(() => Array.from(document.querySelectorAll("button")).find(el => el.innerHTML === "Accepter"));
         break;
 }
 
-function clickIfPresent(toClick) {
+function clickIfPresent(findElementToClick) {
     addEventListener("load", () => {
         const h = setInterval(() => {
+            const toClick = findElementToClick();
             if (toClick) {
                 toClick.click();
                 clearInterval(h);
