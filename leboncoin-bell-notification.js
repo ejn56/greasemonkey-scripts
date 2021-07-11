@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         Leboncoin auto refresh leboncoin search + bell sound for new results
 // @description  Leboncoin auto refresh search tab + little bell sound when new results pop up
-// @version      1.0.2
+// @version      1.0.3
 // @match        https://www.leboncoin.fr/mes-recherches
 // @grant        none
 // @author       ejn56
 // @run-at       document-end
 // @downloadURL  https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/leboncoin-bell-notification.js
+// @updateURL  https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/leboncoin-bell-notification.js
 // ==/UserScript==
 
 // The sound notification to play when new results appear
