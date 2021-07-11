@@ -1,0 +1,41 @@
+// ==UserScript==
+// @name         Youtube/Google/Leboncoin/Ebay auto agree
+// @match        https://consent.youtube.com/*
+// @match        https://consent.google.com/*
+// @match        https://www.youtube.com/*
+// @match        https://www.google.com/*
+// @match        https://www.google.fr/*
+// @match        https://www.leboncoin.fr/*
+// @match        https://www.ebay.fr/*
+// @author       ejn56
+// @grant        none
+// @run-at       document-end
+// ==/UserScript==
+
+switch (location.hostname) {
+    case "consent.youtube.com":
+    case "consent.google.fr":
+    case "consent.google.com":
+        Array.from(document.querySelectorAll("span")).filter(sp => ["J'accepte", "I agree"].includes(sp.innerHTML))[0].click();
+        break;
+    case "www.leboncoin.fr":
+        addEventListener("load", h => {
+            h = setInterval(() => {
+                const button = Array.from(document.querySelectorAll("span")).filter(sp => sp.innerHTML === "Continuer sans accepter")[0];
+                if (button) {
+                    button.click();
+                    clearInterval(h);
+                }
+            }, 100);
+        });
+        //setTimeout(() => Array.from(document.querySelectorAll("span")).filter(sp => sp.innerHTML === "Continuer sans accepter")[0].click(), 2000);
+        break;
+    case "www.google.com":
+    case "www.google.fr":
+        Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML)).parentNode.click();
+        break;
+    case "www.ebay.fr":
+        Array.from(document.querySelectorAll("button")).find(el => el.innerHTML === "Accepter").click();
+        break;
+   
+}
