@@ -3,6 +3,7 @@
 // @description  Leboncoin auto refresh search tab + little bell sound when new results pop up
 // @match        https://www.leboncoin.fr/mes-recherches
 // @grant        none
+// @author       ejn56
 // @run-at       document-end
 // ==/UserScript==
 
