@@ -24,7 +24,7 @@ switch (location.hostname) {
         break;
     case "www.google.com":
     case "www.google.fr":
-        clickIfPresent(() => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML)).parentNode);
+        clickIfPresent(() => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML))?.parentNode);
         break;
     case "www.ebay.fr":
         clickIfPresent(() => Array.from(document.querySelectorAll("button")).find(el => el.innerHTML === "Accepter"));
@@ -33,12 +33,18 @@ switch (location.hostname) {
 
 function clickIfPresent(findElementToClick) {
     addEventListener("load", () => {
+        const waitMs = 200;
+        let count = 0;
         const h = setInterval(() => {
             const toClick = findElementToClick();
             if (toClick) {
                 toClick.click();
                 clearInterval(h);
+            } else if (++count > (1000 / waitMs) * 60) {
+                // Stop the script if it has been running for more than a minute
+                console.log("script stop");
+                clearInterval(h);
             }
-        }, 200);
+        }, waitMs);
     });
 }
