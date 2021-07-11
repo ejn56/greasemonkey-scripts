@@ -13,12 +13,12 @@ const notificationSoundUrl = "https://raw.githubusercontent.com/ejn56/greasemonk
 // Number of seconds to wait for the page to load
 const pageLoadWaitSec = navigator.platform === "Linux armv7l" ? 15 : 2;
 // Random reload interval
-//const minutesBeforeReload = Math.floor(Math.random() * 10) + 10;
-const minutesBeforeReload = 1;
+const minutesBeforeReload = Math.floor(Math.random() * 10) + 10;
 // The expected number of results for a notification to be triggered
 let resultsCount = '4';
 
 setTimeout(() => { // Wait for the page to load before checking the results
+    new Audio(notificationSoundUrl).play(); // FIXME
     if(Array.from(document.querySelectorAll("div")).filter(sp => sp.innerHTML === resultsCount)[0]) {
         // New results have appeared: update title + play sound
         new Audio(notificationSoundUrl).play();
