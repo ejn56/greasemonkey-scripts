@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 // The sound notification to play when new results appear
-const notificationSoundUrl = "https://raw.githubusercontent.com/ledestin/twitch-chat-sound-enchantment/main/sounds/bell-candle-damper.mp3"; // "https://files.catbox.moe/m8rq8g.mp3"
+const notificationSoundUrl = "https://files.catbox.moe/m8rq8g.mp3";
 // Number of seconds to wait for the page to load
 const pageLoadWaitSec = navigator.platform === "Linux armv7l" ? 15 : 2;
 // Random reload interval
