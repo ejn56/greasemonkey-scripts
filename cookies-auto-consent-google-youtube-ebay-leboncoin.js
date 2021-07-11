@@ -34,15 +34,17 @@ switch (location.hostname) {
 function clickIfPresent(findElementToClick) {
     addEventListener("load", () => {
         const waitMs = 200;
+        const timeoutMs = 20 * 1000;
+        // Check every X milliseconds for a button to click
         let count = 0;
         const h = setInterval(() => {
             const toClick = findElementToClick();
             if (toClick) {
+                // Click then stop the loop
                 toClick.click();
                 clearInterval(h);
-            } else if (++count > (1000 / waitMs) * 60) {
-                // Stop the script if it has been running for more than a minute
-                console.log("script stop");
+            } else if (++count * waitMs > timeoutMs) {
+                // Stop the loop if it has been running for too long
                 clearInterval(h);
             }
         }, waitMs);
