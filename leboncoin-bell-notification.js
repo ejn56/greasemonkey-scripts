@@ -5,14 +5,16 @@
 // @grant        none
 // @author       ejn56
 // @run-at       document-end
+// @downloadURL  https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/leboncoin-bell-notification.js
 // ==/UserScript==
 
 // The sound notification to play when new results appear
-const notificationSoundUrl = "https://files.catbox.moe/m8rq8g.mp3";
+const notificationSoundUrl = "https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/bell_low_pitch.mp3";
 // Number of seconds to wait for the page to load
 const pageLoadWaitSec = navigator.platform === "Linux armv7l" ? 15 : 2;
 // Random reload interval
-let minutesBeforeReload = Math.floor(Math.random() * 10) + 10;
+//const minutesBeforeReload = Math.floor(Math.random() * 10) + 10;
+const minutesBeforeReload = 1;
 // The expected number of results for a notification to be triggered
 let resultsCount = '4';
 
@@ -28,7 +30,9 @@ setTimeout(() => { // Wait for the page to load before checking the results
 }, pageLoadWaitSec * 1000);
 
 // Refresh the tab every X minutes
-setTimeout(() => location.reload(true), minutesBeforeReload * 60 * 1000);
+setTimeout(() => {
+    window.location.href = window.location.href;
+}, minutesBeforeReload * 60 * 1000);
 
 // ======= Utility functions =======
 
