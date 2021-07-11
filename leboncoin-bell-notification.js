@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         Leboncoin auto refresh leboncoin search + bell sound for new results
 // @description  Leboncoin auto refresh search tab + little bell sound when new results pop up
+// @version      1.0.1
 // @match        https://www.leboncoin.fr/mes-recherches
 // @grant        none
 // @author       ejn56
