@@ -34,9 +34,13 @@ setTimeout(() => location.reload(true), minutesBeforeReload * 60 * 1000);
 
 // The tab title to display when new results appear
 function buildTitle(icon) {
-    const nextReloadDate = new Date(new Date().getTime() + minutesBeforeReload * 1000 * 60);
-    const currentTimestamp = new Date().getHours() + ":" + new Date().getMinutes();
-    const nextReloadTimestamp = nextReloadDate.getHours() + ":" +
-          (nextReloadDate.getMinutes() < 10 ? "0" + nextReloadDate.getMinutes() : nextReloadDate.getMinutes());
+    const currentDate = new Date();
+    const currentTimestamp = dateToString(currentDate);
+    const nextReloadTimestamp = dateToString(new Date(currentDate.getTime() + minutesBeforeReload * 1000 * 60));
     return "(" + icon + currentTimestamp + " => ⟳" + nextReloadTimestamp + ") " + document.title;
+}
+
+function dateToString(date) {
+    const minutes = date.getMinutes();
+    return date.getHours() + ":" + minutes < 10 ? "0" + minutes : minutes;
 }
