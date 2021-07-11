@@ -37,7 +37,7 @@ function buildTitle(icon) {
     const currentDate = new Date();
     const currentTimestamp = dateToString(currentDate);
     const nextReloadTimestamp = dateToString(new Date(currentDate.getTime() + minutesBeforeReload * 1000 * 60));
-    return "(" + icon + currentTimestamp + " => ⟳" + nextReloadTimestamp + ") " + document.title;
+    return "(" + icon + currentTimestamp + "  ⟳" + nextReloadTimestamp + ") " + document.title;
 }
 
 function dateToString(date) {
