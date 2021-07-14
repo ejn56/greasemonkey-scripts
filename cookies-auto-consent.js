@@ -19,20 +19,25 @@ switch (location.hostname) {
     case "consent.youtube.com":
     case "consent.google.fr":
     case "consent.google.com":
+        log("site=youtube/google");
         clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML)));
         break;
     case "www.leboncoin.fr":
+        log("site=leboncoin");
         clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => sp.innerHTML === "Continuer sans accepter"));
         break;
     case "www.boursorama.com":
     case "clients.boursorama.com":
+        log("site=boursorama");
         clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => sp.innerHTML === "Continuer sans accepter →"));
         break;
     case "www.google.com":
     case "www.google.fr":
+        log("site=google");
         clickIfPresent(() => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML))?.parentNode);
         break;
     case "www.ebay.fr":
+        log("site=ebay");
         clickIfPresent(() => Array.from(document.querySelectorAll("button")).find(el => el.innerHTML === "Accepter"));
         break;
 }
@@ -41,18 +46,23 @@ function clickIfPresent(findElementToClick) {
     addEventListener("load", () => {
         const waitMs = 200;
         const timeoutMs = 20 * 1000;
-        // Check every X milliseconds for a button to click
+        log("Checking every " + waitMs + "ms...");
         let count = 0;
         const h = setInterval(() => {
             const toClick = findElementToClick();
             if (toClick) {
-                // Click then stop the loop
                 toClick.click();
+                log("Cookie-agreement button clicked");
                 clearInterval(h);
             } else if (++count * waitMs > timeoutMs) {
                 // Stop the loop if it has been running for too long
+                log("No cookie-agreement button to click was found => stop the script");
                 clearInterval(h);
             }
         }, waitMs);
     });
+}
+
+function log(message) {
+    console.log("[Tampermonkey cookie auto-agree] " + message)
 }
