@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Youtube/Google/Leboncoin/Ebay cookie auto agree
-// @description  Automatically click on the "I Agree" button on YouTube/Google/Leboncoin/Ebay cookie consent pages
+// @description  Automatically click on the "I Agree" button on YouTube/Google/Leboncoin/Ebay/Boursorama cookie consent pages
 // @match        https://consent.youtube.com/*
 // @match        https://consent.google.com/*
 // @match        https://www.youtube.com/*
@@ -8,6 +8,8 @@
 // @match        https://www.google.fr/*
 // @match        https://www.leboncoin.fr/*
 // @match        https://www.ebay.fr/*
+// @match        https://www.boursorama.com/*
+// @match        https://clients.boursorama.com/*
 // @author       ejn56
 // @grant        none
 // @run-at       document-end
@@ -21,6 +23,10 @@ switch (location.hostname) {
         break;
     case "www.leboncoin.fr":
         clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => sp.innerHTML === "Continuer sans accepter"));
+        break;
+    case "www.boursorama.com":
+    case "clients.boursorama.com":
+        clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => sp.innerHTML === "Continuer sans accepter →"));
         break;
     case "www.google.com":
     case "www.google.fr":
