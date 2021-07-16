@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         Youtube/Google/Leboncoin/Ebay cookie auto agree
-// @description  Automatically click on the "I Agree" button on YouTube/Google/Leboncoin/Ebay/Boursorama cookie consent pages
+// @name         Cookie auto-agree
+// @description  Automatically click on the "I Agree" button on Youtube/Google/Leboncoin/Ebay/Boursorama/UnixStackexchange cookie consent pages
 // @match        https://consent.youtube.com/*
 // @match        https://consent.google.com/*
 // @match        https://www.youtube.com/*
@@ -10,6 +10,7 @@
 // @match        https://www.ebay.fr/*
 // @match        https://www.boursorama.com/*
 // @match        https://clients.boursorama.com/*
+// @match        https://unix.stackexchange.com/*
 // @author       ejn56
 // @grant        none
 // @run-at       document-end
@@ -24,17 +25,21 @@ switch (location.hostname) {
         break;
     case "www.leboncoin.fr":
         log("site=leboncoin");
-        clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => sp.innerHTML === "Continuer sans accepter"));
+        clickIfPresent(() => document.getElementById("didomi-notice-disagree-button"));
         break;
     case "www.boursorama.com":
     case "clients.boursorama.com":
         log("site=boursorama");
-        clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => sp.innerHTML === "Continuer sans accepter →"));
+        clickIfPresent(() => document.querySelector(".didomi-continue-without-agreeing"));
+        break;
+    case "unix.stackexchange.com":
+        log("site=unix stackexchange");
+        clickIfPresent(() => document.querySelector(".js-consent-banner-hide"));
         break;
     case "www.google.com":
     case "www.google.fr":
         log("site=google");
-        clickIfPresent(() => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML))?.parentNode);
+        clickIfPresent(() => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML)));
         break;
     case "www.ebay.fr":
         log("site=ebay");
