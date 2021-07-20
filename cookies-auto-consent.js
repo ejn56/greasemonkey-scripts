@@ -1,20 +1,24 @@
 // ==UserScript==
 // @name         Cookie auto-agree
 // @description  Automatically click on the "I Agree" button on Youtube/Google/Leboncoin/Ebay/Boursorama/UnixStackexchange cookie consent pages
-// @match        https://consent.youtube.com/*
-// @match        https://consent.google.com/*
-// @match        https://www.youtube.com/*
-// @match        https://www.google.com/*
-// @match        https://www.google.fr/*
-// @match        https://www.leboncoin.fr/*
-// @match        https://www.ebay.fr/*
-// @match        https://www.boursorama.com/*
-// @match        https://clients.boursorama.com/*
-// @match        https://unix.stackexchange.com/*
-// @author       ejn56
-// @grant        none
-// @run-at       document-end
+// @match           https://consent.youtube.com/*
+// @match           https://consent.google.com/*
+// @match           https://www.youtube.com/*
+// @match           https://www.google.com/*
+// @match           https://www.google.fr/*
+// @match           https://www.leboncoin.fr/*
+// @match           https://www.ebay.fr/*
+// @match           https://www.boursorama.com/*
+// @match           https://clients.boursorama.com/*
+// @match           https://unix.stackexchange.com/*
+// @updateURL       https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
+// @downloadURL     https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
+// @author          ejn56
+// @grant           none
+// @run-at          document-end
 // ==/UserScript==
+
+'use strict';
 
 switch (location.hostname) {
     case "consent.youtube.com":
