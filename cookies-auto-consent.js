@@ -11,6 +11,7 @@
 // @match           https://www.boursorama.com/*
 // @match           https://clients.boursorama.com/*
 // @match           https://unix.stackexchange.com/*
+// @match           https://superuser.com/*
 // @updateURL       https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @downloadURL     https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @author          ejn56
@@ -48,6 +49,9 @@ switch (location.hostname) {
     case "www.ebay.fr":
         log("site=ebay");
         clickIfPresent(() => Array.from(document.querySelectorAll("button")).find(el => el.innerHTML === "Accepter"));
+        break;
+    case "superuser.com":
+        clickIfPresent(() => document.querySelector(".js-consent-banner-hide"));
         break;
 }
 
