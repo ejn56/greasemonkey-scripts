@@ -12,6 +12,7 @@
 // @match           https://clients.boursorama.com/*
 // @match           https://unix.stackexchange.com/*
 // @match           https://superuser.com/*
+// @match           https://www.lemonde.fr/*
 // @updateURL       https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @downloadURL     https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @author          ejn56
@@ -21,48 +22,50 @@
 
 'use strict';
 
-switch (location.hostname) {
-    case "consent.youtube.com":
-    case "consent.google.fr":
-    case "consent.google.com":
-        log("site=youtube/google");
-        clickIfPresent(() => Array.from(document.querySelectorAll("span")).find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML)));
-        break;
-    case "www.leboncoin.fr":
-        log("site=leboncoin");
-        clickIfPresent(() => document.getElementById("didomi-notice-disagree-button"));
-        break;
-    case "www.boursorama.com":
-    case "clients.boursorama.com":
-        log("site=boursorama");
-        clickIfPresent(() => document.querySelector(".didomi-continue-without-agreeing"));
-        break;
-    case "unix.stackexchange.com":
-        log("site=unix stackexchange");
-        clickIfPresent(() => document.querySelector(".js-consent-banner-hide"));
-        break;
-    case "www.google.com":
-    case "www.google.fr":
-        log("site=google");
-        clickIfPresent(() => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML)));
-        break;
-    case "www.ebay.fr":
-        log("site=ebay");
-        clickIfPresent(() => Array.from(document.querySelectorAll("button")).find(el => el.innerHTML === "Accepter"));
-        break;
-    case "superuser.com":
-        clickIfPresent(() => document.querySelector(".js-consent-banner-hide"));
-        break;
+let elementFinder = buildElementFinder(location.hostname);
+clickIfPresent(elementFinder);
+
+function buildElementFinder(hostname) {
+    switch (hostname) {
+        case "consent.youtube.com":
+        case "consent.google.fr":
+        case "consent.google.com":
+            log("site=youtube/google");
+            return () => Array.from(document.querySelectorAll("span")).find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML));
+        case "www.leboncoin.fr":
+            log("site=leboncoin");
+            return () => document.getElementById("didomi-notice-disagree-button");
+        case "www.boursorama.com":
+        case "clients.boursorama.com":
+            log("site=boursorama");
+            return () => document.querySelector(".didomi-continue-without-agreeing");
+        case "unix.stackexchange.com":
+            log("site=unix stackexchange");
+            return document.querySelector(".js-consent-banner-hide");
+        case "www.google.com":
+        case "www.google.fr":
+            log("site=google");
+            return () => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML));
+        case "www.ebay.fr":
+            log("site=ebay");
+            return () => Array.from(document.querySelectorAll("button")).find(el => el.innerHTML === "Accepter");
+        case "superuser.com":
+            log("site=superuser.com");
+            return () => document.querySelector(".js-consent-banner-hide");
+        case "www.lemonde.fr":
+            log("site=lemonde.fr");
+            return () => document.querySelector('[data-gdpr-expression="denyAll"]');
+    }
 }
 
-function clickIfPresent(findElementToClick) {
+function clickIfPresent(elementFinder) {
     addEventListener("load", () => {
         const waitMs = 200;
         const timeoutMs = 20 * 1000;
         log("Checking every " + waitMs + "ms...");
         let count = 0;
         const h = setInterval(() => {
-            const toClick = findElementToClick();
+            const toClick = elementFinder();
             if (toClick) {
                 toClick.click();
                 log("Cookie-agreement button clicked");
