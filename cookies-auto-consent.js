@@ -48,7 +48,7 @@ function buildElementFinder(hostname) {
             return () => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML));
         case "www.ebay.fr":
             log("site=ebay");
-            return () => Array.from(document.querySelectorAll("button")).find(el => el.innerHTML === "Accepter");
+            return () => document.getElementById("gdpr-banner-accept");
         case "superuser.com":
             log("site=superuser.com");
             return () => document.querySelector(".js-consent-banner-hide");
