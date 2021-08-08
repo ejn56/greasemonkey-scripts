@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         Cookie auto-agree
-// @description  Automatically click on the "I Agree" button on Youtube/Google/Leboncoin/Ebay/Boursorama/UnixStackexchange cookie consent pages
+// @name            Cookie auto-agree
+// @description     Automatically click the "I Agree" cookie consent button on multiple websites: Youtube, Google, Leboncoin, Ebay, etc
 // @match           https://consent.youtube.com/*
 // @match           https://consent.google.com/*
 // @match           https://www.youtube.com/*
