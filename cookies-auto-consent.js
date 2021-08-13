@@ -29,12 +29,12 @@ function findCookieButton(hostname) {
         case "consent.youtube.com":
         case "consent.google.fr":
         case "consent.google.com":
-            log("site=youtube/google");
-            return Array.from(document.querySelectorAll("span")).find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML));
         case "www.google.com":
         case "www.google.fr":
-            log("site=google");
-            return Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML));
+            log("site=youtube/google");
+            return Array.from(document.querySelectorAll("span"))
+                .concat(Array.from(document.querySelectorAll("div")))
+                .find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML));
         case "www.leboncoin.fr":
             log("site=leboncoin");
             return document.getElementById("didomi-notice-disagree-button");
