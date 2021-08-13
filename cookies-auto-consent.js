@@ -32,6 +32,10 @@ function buildElementFinder(hostname) {
         case "consent.google.com":
             log("site=youtube/google");
             return () => Array.from(document.querySelectorAll("span")).find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML));
+        case "www.google.com":
+        case "www.google.fr":
+            log("site=google");
+            return () => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML));
         case "www.leboncoin.fr":
             log("site=leboncoin");
             return () => document.getElementById("didomi-notice-disagree-button");
@@ -41,11 +45,7 @@ function buildElementFinder(hostname) {
             return () => document.querySelector(".didomi-continue-without-agreeing");
         case "unix.stackexchange.com":
             log("site=unix stackexchange");
-            return document.querySelector(".js-consent-banner-hide");
-        case "www.google.com":
-        case "www.google.fr":
-            log("site=google");
-            return () => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML));
+            return () => document.querySelector(".js-consent-banner-hide");
         case "www.ebay.fr":
             log("site=ebay");
             return () => document.getElementById("gdpr-banner-accept");
