@@ -3,6 +3,7 @@
 // @description     Automatically click the "I Agree" cookie consent button on multiple websites: Youtube, Google, Leboncoin, Ebay, etc
 // @match           https://consent.youtube.com/*
 // @match           https://consent.google.com/*
+// @match           https://consent.google.fr/*
 // @match           https://www.youtube.com/*
 // @match           https://www.google.com/*
 // @match           https://www.google.fr/*
