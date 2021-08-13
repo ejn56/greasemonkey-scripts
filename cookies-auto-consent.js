@@ -22,52 +22,51 @@
 
 'use strict';
 
-let elementFinder = buildElementFinder(location.hostname);
-clickIfPresent(elementFinder);
+clickCookieButtonIfPresent(location.hostname);
 
-function buildElementFinder(hostname) {
+function findCookieButton(hostname) {
     switch (hostname) {
         case "consent.youtube.com":
         case "consent.google.fr":
         case "consent.google.com":
             log("site=youtube/google");
-            return () => Array.from(document.querySelectorAll("span")).find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML));
+            return Array.from(document.querySelectorAll("span")).find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML));
         case "www.google.com":
         case "www.google.fr":
             log("site=google");
-            return () => Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML));
+            return Array.from(document.querySelectorAll("div")).find(el => ["J'accepte", "I agree"].includes(el.innerHTML));
         case "www.leboncoin.fr":
             log("site=leboncoin");
-            return () => document.getElementById("didomi-notice-disagree-button");
+            return document.getElementById("didomi-notice-disagree-button");
         case "www.boursorama.com":
         case "clients.boursorama.com":
             log("site=boursorama");
-            return () => document.querySelector(".didomi-continue-without-agreeing");
+            return document.querySelector(".didomi-continue-without-agreeing");
         case "unix.stackexchange.com":
             log("site=unix stackexchange");
-            return () => document.querySelector(".js-consent-banner-hide");
+            return document.querySelector(".js-consent-banner-hide");
         case "www.ebay.fr":
             log("site=ebay");
-            return () => document.getElementById("gdpr-banner-accept");
+            return document.getElementById("gdpr-banner-accept");
         case "superuser.com":
             log("site=superuser.com");
-            return () => document.querySelector(".js-consent-banner-hide");
+            return document.querySelector(".js-consent-banner-hide");
         case "www.lemonde.fr":
             log("site=lemonde.fr");
-            return () => document.querySelector('[data-gdpr-expression="denyAll"]');
+            return document.querySelector('[data-gdpr-expression="denyAll"]');
     }
 }
 
-function clickIfPresent(elementFinder) {
+function clickCookieButtonIfPresent(hostname) {
     addEventListener("load", () => {
         const waitMs = 200;
         const timeoutMs = 20 * 1000;
         log("Checking every " + waitMs + "ms...");
         let count = 0;
         const h = setInterval(() => {
-            const toClick = elementFinder();
-            if (toClick) {
-                toClick.click();
+            const cookieButton = findCookieButton(hostname);
+            if (cookieButton) {
+                cookieButton.click();
                 log("Cookie-agreement button clicked");
                 clearInterval(h);
             } else if (++count * waitMs > timeoutMs) {
