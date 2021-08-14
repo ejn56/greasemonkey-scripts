@@ -14,6 +14,7 @@
 // @match           https://unix.stackexchange.com/*
 // @match           https://superuser.com/*
 // @match           https://www.lemonde.fr/*
+// @match           https://www.freelance-info.fr/*
 // @updateURL       https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @downloadURL     https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @author          ejn56
@@ -55,6 +56,9 @@ function findCookieButton(hostname) {
         case "www.lemonde.fr":
             log("site=lemonde.fr");
             return document.querySelector('[data-gdpr-expression="denyAll"]');
+        case "www.freelance-info.fr":
+            log("site=freelance-info.fr");
+            return document.querySelector(".cc-dismiss");
     }
 }
 
