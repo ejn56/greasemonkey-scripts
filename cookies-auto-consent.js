@@ -19,9 +19,13 @@
 // @author          ejn56
 // @grant           none
 // @run-at          document-end
+// @require         http://code.jquery.com/jquery-3.6.0.min.js
 // ==/UserScript==
 
 'use strict';
+// Here we need to declare all the jQuery types in order for tslint to recognize them
+const $ = window.$; // Trick tslint into recognizing the jquery '$' character
+const jQuery = window.jQuery;
 
 clickCookieButtonIfPresent(location.hostname);
 
@@ -33,28 +37,26 @@ function findCookieButton(hostname) {
         case "www.google.com":
         case "www.google.fr":
             log("site=youtube/google");
-            return Array.from(document.querySelectorAll("span"))
-                .concat(Array.from(document.querySelectorAll("div")))
-                .find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML));
+            return $('span,div').filter(function() {return ["J'accepte", "I agree"].includes($(this).text());});
         case "www.leboncoin.fr":
             log("site=leboncoin");
-            return document.getElementById("didomi-notice-disagree-button");
+            return $("#didomi-notice-disagree-button");
         case "www.boursorama.com":
         case "clients.boursorama.com":
             log("site=boursorama");
-            return document.querySelector(".didomi-continue-without-agreeing");
+            return $(".didomi-continue-without-agreeing");
         case "unix.stackexchange.com":
             log("site=unix stackexchange");
-            return document.querySelector(".js-consent-banner-hide");
+            return $(".js-consent-banner-hide");
         case "www.ebay.fr":
             log("site=ebay");
-            return document.getElementById("gdpr-banner-accept");
+            return $("#gdpr-banner-accept");
         case "superuser.com":
             log("site=superuser.com");
-            return document.querySelector(".js-consent-banner-hide");
+            return $(".js-consent-banner-hide");
         case "www.lemonde.fr":
             log("site=lemonde.fr");
-            return document.querySelector('[data-gdpr-expression="denyAll"]');
+            return $("[data-gdpr-expression='denyAll']");
     }
 }
 
@@ -67,7 +69,11 @@ function clickCookieButtonIfPresent(hostname) {
         const h = setInterval(() => {
             const cookieButton = findCookieButton(hostname);
             if (cookieButton) {
-                cookieButton.click();
+                if (cookieButton instanceof jQuery){
+                    cookieButton.each(function() {$(this).click();});
+                } else {
+                    cookieButton.click();
+                }
                 log("Cookie-agreement button clicked");
                 clearInterval(h);
             } else if (++count * waitMs > timeoutMs) {
