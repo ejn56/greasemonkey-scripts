@@ -25,6 +25,8 @@
 
 'use strict';
 
+const NO_MATCH = "NO_MATCH";
+
 clickCookieButtonIfPresent(location.hostname);
 
 function findCookieButton(hostname) {
@@ -54,6 +56,8 @@ function findCookieButton(hostname) {
             return document.querySelector(".cc-dismiss");
         case "www.portail-autoentrepreneur.fr":
             return document.querySelector(".cookies-policy .btn-green-border");
+        default:
+            return NO_MATCH;
     }
 }
 
@@ -65,13 +69,16 @@ function clickCookieButtonIfPresent(hostname) {
         let count = 0;
         const h = setInterval(() => {
             const cookieButton = findCookieButton(hostname);
-            if (cookieButton) {
+            if (cookieButton === NO_MATCH) {
+                log("The site '" + hostname + "' is not supported => abort");
+                clearInterval(h);
+            } else if (cookieButton) {
                 cookieButton.click();
                 log("Cookie-agreement button clicked");
                 clearInterval(h);
             } else if (++count * waitMs > timeoutMs) {
                 // Stop the loop if it has been running for too long
-                log("No cookie-agreement button to click was found => stop the script");
+                log("No cookie-agreement button to click was found after waiting " + (timeoutMs / 1000) + "sec => stop the script");
                 clearInterval(h);
             }
         }, waitMs);
