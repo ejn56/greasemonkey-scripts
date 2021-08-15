@@ -15,6 +15,7 @@
 // @match           https://superuser.com/*
 // @match           https://www.lemonde.fr/*
 // @match           https://www.freelance-info.fr/*
+// @match           https://www.portail-autoentrepreneur.fr/*
 // @updateURL       https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @downloadURL     https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @author          ejn56
@@ -33,32 +34,26 @@ function findCookieButton(hostname) {
         case "consent.google.com":
         case "www.google.com":
         case "www.google.fr":
-            log("site=youtube/google");
             return Array.from(document.querySelectorAll("span"))
                 .concat(Array.from(document.querySelectorAll("div")))
                 .find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML));
         case "www.leboncoin.fr":
-            log("site=leboncoin");
             return document.getElementById("didomi-notice-disagree-button");
         case "www.boursorama.com":
         case "clients.boursorama.com":
-            log("site=boursorama");
             return document.querySelector(".didomi-continue-without-agreeing");
         case "unix.stackexchange.com":
-            log("site=unix stackexchange");
             return document.querySelector(".js-consent-banner-hide");
         case "www.ebay.fr":
-            log("site=ebay");
             return document.getElementById("gdpr-banner-accept");
         case "superuser.com":
-            log("site=superuser.com");
             return document.querySelector(".js-consent-banner-hide");
         case "www.lemonde.fr":
-            log("site=lemonde.fr");
             return document.querySelector('[data-gdpr-expression="denyAll"]');
         case "www.freelance-info.fr":
-            log("site=freelance-info.fr");
             return document.querySelector(".cc-dismiss");
+        case "www.portail-autoentrepreneur.fr":
+            return document.querySelector(".cookies-policy .btn-green-border");
     }
 }
 
