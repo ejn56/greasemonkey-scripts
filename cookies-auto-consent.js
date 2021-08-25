@@ -9,14 +9,10 @@
 // @match           https://www.google.fr/*
 // @match           https://www.leboncoin.fr/*
 // @match           https://www.ebay.fr/*
-// @match           https://www.boursorama.com/*
-// @match           https://clients.boursorama.com/*
 // @match           https://unix.stackexchange.com/*
 // @match           https://superuser.com/*
 // @match           https://www.lemonde.fr/*
-// @match           https://www.freelance-info.fr/*
-// @match           https://www.portail-autoentrepreneur.fr/*
-// @match           https://www.service-public.fr/*
+// @match           https://wwws.airfrance.fr/*
 // @updateURL       https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @downloadURL     https://raw.githubusercontent.com/ejn56/greasemonkey-scripts/main/cookies-auto-consent.js
 // @author          ejn56
@@ -42,9 +38,6 @@ function findCookieButton(hostname) {
                 .find(sp => ["J'accepte", "I agree"].includes(sp.innerHTML));
         case "www.leboncoin.fr":
             return document.getElementById("didomi-notice-disagree-button");
-        case "www.boursorama.com":
-        case "clients.boursorama.com":
-            return document.querySelector(".didomi-continue-without-agreeing");
         case "unix.stackexchange.com":
             return document.querySelector(".js-consent-banner-hide");
         case "www.ebay.fr":
@@ -53,12 +46,8 @@ function findCookieButton(hostname) {
             return document.querySelector(".js-consent-banner-hide");
         case "www.lemonde.fr":
             return document.querySelector('[data-gdpr-expression="denyAll"]');
-        case "www.freelance-info.fr":
-            return document.querySelector(".cc-dismiss");
-        case "www.portail-autoentrepreneur.fr":
-            return document.querySelector(".cookies-policy .btn-green-border");
-        case "www.service-public.fr":
-            return document.querySelector(".orejime-Notice-declineButton");
+        case "wwws.airfrance.fr":
+            return document.getElementById("accept_cookies_btn");
         default:
             return NO_MATCH;
     }
