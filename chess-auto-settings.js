@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Chess.com auto-settings
-// @version      0.1
+// @version      1.0
 // @match        https://www.chess.com
 // @match        https://www.chess.com/play/online
 // @match        https://www.chess.com/settings
@@ -60,7 +60,6 @@ async function findButtonsAndClickThem() {
 }
 
 function getButtonsOrFinders() {
-    debugger;
     if (location.pathname === '/') {
         return [document.querySelector('.index-guest-button')];
     } else if (location.pathname.endsWith('play/online')) {
@@ -69,17 +68,20 @@ function getButtonsOrFinders() {
             () => document.getElementById("guest-button"),
         ];
     } else if (location.pathname.endsWith('settings/live')) {
-        const toggleSelector = '.ui_v5-switch-checkbox';
+        const toggleSelector = '.cc-switch-checkbox';
         const toggles = [
             document.querySelectorAll(toggleSelector)[0],
             document.querySelectorAll(toggleSelector)[1],
             document.querySelectorAll(toggleSelector)[5]
-        ].filter(e => !e.checked);
+        ].filter(e => !e?.checked);
         if (toggles.length) toggles.push(document.getElementById('live_chess_save'));
         return toggles;
     } else if (location.pathname.endsWith('settings/themes') && !hasRun('settings/themes')) {
         return [
-            () => document.querySelector('.settings-themes-walnut')
+            () => {
+                markAsRun('settings/themes');
+                return document.querySelector('.settings-themes-walnut');
+            }
         ];
     } else {
         return [];
@@ -92,8 +94,7 @@ async function clickButtons(buttonsOrFunctions) {
         await timer();
         const next = reversedButtonsOrFunctions.pop();
         const button = typeof next === 'function' ? next() : next;
-        debugger;
-        button && button.click();
+        button?.click();
     }
 }
 
